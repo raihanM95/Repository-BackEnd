@@ -14,6 +14,5 @@ namespace MSDSL_BLL.BLLContract
         RepoClient GetRepoClient(int ID);
         string DeleteRepoClient(int ID, out string errMsg);
         public RepoClient UpdateRepoClient(RepoClient repoClient, out string errMessage);
-        bool IsExist(int id);
     }
 }

@@ -40,22 +40,23 @@ namespace MSDSL_BLL.BLLRepository
 
         public List<RepoClient> GetAllRepoClients(RepoClient repoClient)
         {
-            throw new NotImplementedException();
+            return _repoclient.GetAllRepoClients(repoClient);
         }
 
         public RepoClient GetRepoClient(int ID)
         {
-            throw new NotImplementedException();
+            return _repoclient.GetRepoClient(ID);
         }
 
-        public bool IsExist(int id)
+        public RepoClient UpdateRepoClient(RepoClient repoClient, out string errMsg)
         {
-            throw new NotImplementedException();
-        }
-
-        public RepoClient UpdateRepoClient(RepoClient repoClient, out string errMessage)
-        {
-            throw new NotImplementedException();
+            var isExist = _repoclient.IsExist(repoClient.RepoClientID);
+            if (!isExist)
+            {
+                errMsg = "No data found.";
+                return null;
+            }
+            return _repoclient.UpdateRepoClient(repoClient, out errMsg);
         }
     }
 }
