@@ -10,7 +10,7 @@ namespace MSDSL_DbAccessor.IRepository
     public interface IRepoClientRepository
     {
         RepoClient CreateRepoClient(RepoClient repoClient,out string errMsg);
-        List<RepoClient> GetAllRepoClients(RepoClient repoClient);
+        List<RepoClient> GetAllRepoClients();
         RepoClient GetRepoClient(int ID);
         string DeleteRepoClient(int ID, out string errMsg);
         public RepoClient UpdateRepoClient(RepoClient repoClient, out string errMessage);

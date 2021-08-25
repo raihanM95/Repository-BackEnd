@@ -38,9 +38,9 @@ namespace MSDSL_BLL.BLLRepository
             return _repoclient.DeleteRepoClient(ID, out errMsg);
         }
 
-        public List<RepoClient> GetAllRepoClients(RepoClient repoClient)
+        public List<RepoClient> GetAllRepoClients()
         {
-            return _repoclient.GetAllRepoClients(repoClient);
+            return _repoclient.GetAllRepoClients();
         }
 
         public RepoClient GetRepoClient(int ID)

@@ -18,5 +18,16 @@ namespace MSDSL_RepositoryManagement.Controllers
         {
             _repoclientBLL = repoclientBLL;
         }
+
+        [HttpGet]
+        public IActionResult GetRepoClient()
+        {
+            var response = _repoclientBLL.GetAllRepoClients();
+            if(response==null)
+            {
+                return BadRequest();
+            }
+            return Ok(response);
+        }
     }
 }

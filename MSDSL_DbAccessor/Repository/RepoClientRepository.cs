@@ -90,7 +90,7 @@ namespace MSDSL_DbAccessor.Repository
             return "Delete Successfull";
         }
 
-        public List<RepoClient> GetAllRepoClients(RepoClient repoClient)
+        public List<RepoClient> GetAllRepoClients()
         {
             string sql = "select * from RepoClients";
             return _db.Query<RepoClient>(sql).ToList();
