@@ -2,7 +2,7 @@
 
 namespace MSDSL_DbAccessor.Migrations
 {
-    public partial class AddRepositorClientToDatabase : Migration
+    public partial class AddRepoClientToDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,7 +19,29 @@ namespace MSDSL_DbAccessor.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_RepoClients", x => x.RepoClientID);
+                    table.ForeignKey(
+                        name: "FK_RepoClients_Clients_ClientID",
+                        column: x => x.ClientID,
+                        principalTable: "Clients",
+                        principalColumn: "ClientID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RepoClients_RepositoryLists_RepoID",
+                        column: x => x.RepoID,
+                        principalTable: "RepositoryLists",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RepoClients_ClientID",
+                table: "RepoClients",
+                column: "ClientID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RepoClients_RepoID",
+                table: "RepoClients",
+                column: "RepoID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

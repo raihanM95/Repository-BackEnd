@@ -92,15 +92,21 @@ namespace MSDSL_DbAccessor.Repository
 
         public List<RepoClient> GetAllRepoClients()
         {
-            string sql = "select * from RepoClients";
-            return _db.Query<RepoClient>(sql).ToList();
+            var response = _context.RepoClients.Include(m => m.Client).Include(m => m.RepositoryList).ToList();
+            return response;
+
+            //string sql = "select * from RepoClients INNER JOIN Clients ON  Clients.ClientID=RepoClients.ClientID " +
+            //    "INNER JOIN RepositoryLists ON RepositoryLists.ID = RepoClients.RepoID";
+            //return _db.Query<RepoClient>(sql).ToList();
         }
 
         public RepoClient GetRepoClient(int ID)
         {
-            string sql = "select * from RepoClients where RepoClientID= @ID";
-            var obj = _db.Query<RepoClient>(sql, new { @ID = ID }).FirstOrDefault();
-            return obj;
+            var response = _context.RepoClients.Include(m => m.Client).Include(m => m.RepositoryList).FirstOrDefault(a=>a.RepoClientID==ID);
+            return response;
+            //string sql = "select * from RepoClients where RepoClientID= @ID";
+            //var obj = _db.Query<RepoClient>(sql, new { @ID = ID }).FirstOrDefault();
+            //return obj;
         }
 
         public bool IsExist(int id)

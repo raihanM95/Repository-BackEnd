@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MSDSL_DbAccessor.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210823103915_AddRepositorClientToDatabase")]
-    partial class AddRepositorClientToDatabase
+    [Migration("20210825050854_AddRepoClientToDB")]
+    partial class AddRepoClientToDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -62,7 +62,7 @@ namespace MSDSL_DbAccessor.Migrations
                     b.Property<int>("ClientID")
                         .HasColumnType("int");
 
-                    b.Property<string>("Date")
+                    b.Property<string>("Dates")
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
@@ -70,6 +70,10 @@ namespace MSDSL_DbAccessor.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("RepoClientID");
+
+                    b.HasIndex("ClientID");
+
+                    b.HasIndex("RepoID");
 
                     b.ToTable("RepoClients");
                 });
@@ -127,6 +131,25 @@ namespace MSDSL_DbAccessor.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("MSDSL_RepoModel.Entities.RepoClient", b =>
+                {
+                    b.HasOne("MSDSL_RepoModel.Entities.Client", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MSDSL_RepoModel.Entities.RepositoryList", "RepositoryList")
+                        .WithMany()
+                        .HasForeignKey("RepoID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Client");
+
+                    b.Navigation("RepositoryList");
                 });
 #pragma warning restore 612, 618
         }
