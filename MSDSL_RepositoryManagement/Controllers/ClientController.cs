@@ -12,7 +12,7 @@ namespace MSDSL_RepositoryManagement.Controllers
 {
     [Route("[controller]/[action]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ClientController : ControllerBase
     {
         private readonly IClientBLL _clientBLL;
