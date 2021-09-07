@@ -12,7 +12,7 @@ namespace MSDSL_RepositoryManagement.Controllers
 {
     [Route("[controller]/[action]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class DeveloperController : ControllerBase
     {
         private readonly IDeveloperBLL _developerBLL;

@@ -13,7 +13,7 @@ namespace MSDSL_RepositoryManagement.Controllers
 {
     [Route("[controller]/[action]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class RepositoriesController : ControllerBase
     {
         private readonly IRepositoryBLL _repoAcces;

@@ -9,8 +9,10 @@ namespace MSDSL_RepoModel.Dtos
 {
     public class RepoClientMap
     {
-        public RepoClient RepoClient { get; set; }
-        public IEnumerable<Client> Client { get; set; }
-        public IEnumerable<RepositoryList> RepositoryList { get; set; }
+        public int RepoClientID { get; set; }
+        public int clientList { get; set; }
+        public string createDate { get; set; }
+        public int repoList { get; set; }
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using MSDSL_BLL.BLLContract;
 using MSDSL_DbAccessor.IRepository;
+using MSDSL_RepoModel.Dtos;
 using MSDSL_RepoModel.Entities;
 using System;
 using System.Collections.Generic;
@@ -16,14 +17,9 @@ namespace MSDSL_BLL.BLLRepository
         {
             _repoclient = repoclient;
         }
-        public RepoClient CreateRepoClient(RepoClient repoClient, out string errMsg)
+        public RepoClientMap CreateRepoClient(RepoClientMap repoClient, out string errMsg)
         {
-            var isExist = _repoclient.IsExist(repoClient.RepoClientID);
-            if(isExist)
-            {
-                errMsg = "Data already exist";
-                return repoClient;
-            }
+
             return _repoclient.CreateRepoClient(repoClient, out errMsg);
         }
 
@@ -48,7 +44,7 @@ namespace MSDSL_BLL.BLLRepository
             return _repoclient.GetRepoClient(ID);
         }
 
-        public RepoClient UpdateRepoClient(RepoClient repoClient, out string errMsg)
+        public RepoClientMap UpdateRepoClient(RepoClientMap repoClient, out string errMsg)
         {
             var isExist = _repoclient.IsExist(repoClient.RepoClientID);
             if (!isExist)

@@ -3,6 +3,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using MSDSL_DbAccessor.IRepository;
+using MSDSL_RepoModel.Dtos;
 using MSDSL_RepoModel.Entities;
 using System;
 using System.Collections.Generic;
@@ -23,23 +24,9 @@ namespace MSDSL_DbAccessor.Repository
             _db = new SqlConnection(configuration.GetConnectionString("DefaultConnection"));
             _context = context;
         }
-        public RepoClient CreateRepoClient(RepoClient repoClient, out string errMsg)
+        public RepoClientMap CreateRepoClient(RepoClientMap repoClient, out string errMsg)
         {
             errMsg = string.Empty;
-            var ClientCheck = _context.Clients.Find(repoClient.ClientID);
-            var RepoCheck = _context.RepositoryLists.Find(repoClient.RepoID);
-
-            var CheckC = _context.RepoClients.FirstOrDefault(c=>c.ClientID==repoClient.ClientID);
-            var CheckR = _context.RepoClients.FirstOrDefault(c=>c.RepoID==repoClient.RepoID);
-
-            if(CheckC!=null && CheckR!=null)
-            {
-                errMsg = "Data already Exist";
-                return repoClient;
-            }
-
-            if (ClientCheck != null && RepoCheck != null)
-            {
                 var sql = "insert into RepoClients (ClientID,RepoID,Dates) values (@ClientID,@RepoID,@Dates);" +
                     "SELECT CAST(SCOPE_IDENTITY() AS INT)";
 
@@ -49,9 +36,9 @@ namespace MSDSL_DbAccessor.Repository
                 {
                     var id = _db.Query<int>(sql, new
                     {
-                        @ClientID = repoClient.ClientID,
-                        @RepoID = repoClient.RepoID,
-                        @Dates = repoClient.Dates,
+                        @ClientID = repoClient.clientList,
+                        @RepoID = repoClient.repoList,
+                        @Dates = repoClient.createDate,
                     }, transaction: transaction).FirstOrDefault();
 
                     if (string.IsNullOrEmpty(id.ToString()))
@@ -66,14 +53,19 @@ namespace MSDSL_DbAccessor.Repository
                         transaction.Commit();
                     }
                 }
-            }
             return repoClient;
         }
-        public RepoClient UpdateRepoClient(RepoClient repoClient, out string errMessage)
+        public RepoClientMap UpdateRepoClient(RepoClientMap repoClient, out string errMessage)
         {
             errMessage = string.Empty;
-            string sql = "update RepoClients set ClientID=@ClientID,RepoID=@RepoID,Dates=@Dates where ID=@ID;";
-            _db.Execute(sql, repoClient);
+            string sql = "update RepoClients set ClientID=@ClientID,RepoID=@RepoID,Dates=@Dates where RepoClientID=@RepoClientID;";
+            _db.Query<RepoClientMap>(sql, new
+            {
+                @ClientID= repoClient.clientList,
+                @RepoID = repoClient.repoList,
+                @Dates = repoClient.createDate,
+                @RepoClientID = repoClient.RepoClientID
+            });
             return repoClient;
         }
 
