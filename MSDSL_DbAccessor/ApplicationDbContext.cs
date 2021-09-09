@@ -21,6 +21,7 @@ namespace MSDSL_DbAccessor
         public DbSet<RepositoryList> RepositoryLists { get; set; }
         public DbSet<RepoClient> RepoClients { get; set; }
         public DbSet<RepoDev> RepoDevs { get; set; }
+        public DbSet<Handover> Handovers { get; set; }
 
     }
 }

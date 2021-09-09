@@ -40,6 +40,9 @@ namespace MSDSL_RepositoryManagement.Extensions
             services.AddTransient<IRepoDevBLL, RepoDevBLL>();
             services.AddTransient<IRepoDevRepository, RepoDevRepository>();
 
+            services.AddTransient<IHandoverBLL, HandoverBLL>();
+            services.AddTransient<IHandoverRepository, HandoverRepository>();
+
         }
         public static void ConfigureMSSQLContext(this IServiceCollection services, IConfiguration config)//for passing database credentials
         {
