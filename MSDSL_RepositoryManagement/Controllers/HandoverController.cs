@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MSDSL_BLL.BLLContract;
+using MSDSL_RepoModel.Dtos;
+using MSDSL_RepoModel.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +28,22 @@ namespace MSDSL_RepositoryManagement.Controllers
             if (response == null)
             {
                 return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateHandOver([FromBody] HandoverMap handover)
+        {
+            var response = _handoverBLL.UpdateHandOver(handover,  out string errMsg);
+
+            if(response==null)
+            {
+                return BadRequest(response);
+            }
+            if(!string.IsNullOrEmpty(errMsg))
+            {
+                return BadRequest(errMsg);
             }
             return Ok(response);
         }

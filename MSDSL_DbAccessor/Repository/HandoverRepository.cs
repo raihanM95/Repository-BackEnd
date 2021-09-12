@@ -3,6 +3,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using MSDSL_DbAccessor.IRepository;
+using MSDSL_RepoModel.Dtos;
 using MSDSL_RepoModel.Entities;
 using System;
 using System.Collections.Generic;
@@ -22,33 +23,41 @@ namespace MSDSL_DbAccessor.Repository
             _db = new SqlConnection(configuration.GetConnectionString("DefaultConnection"));
             _context = context;
         }
-        public Handover CreateHandOver(Handover handover, out string errMsg)
+
+
+        public List<Object> GetHandoverList()
         {
-            throw new NotImplementedException();
+            string sql = " select * from RepoDevs " +
+                "left join Handovers ON Handovers.ID = RepoDevs.RepoID " +
+                "left join RepositoryLists ON RepositoryLists.ID = RepoDevs.RepoID " +
+                "left join Developers ON Developers.DeveloperID = RepoDevs.DevID";
+            return _db.Query<Object>(sql).ToList();
         }
 
-        public string DeleteHandOver(int ID, out string errMsg)
+        public HandoverMap UpdateHandOver(HandoverMap handover, out string errMsg)
         {
-            errMsg = string.Empty;
-            string sql = "delete from Handovers where ID=@ID; SELECT @@ROWCOUNT";
-            var objResult = _db.Execute(sql, new { @ID = ID });
-            if (objResult <= 0)
+            string ObjSql = "select * from RepoDevs where DevID=@DevID and RepoID=@RepoID";
+            var IsExist = _db.Query<RepoDev>(ObjSql, new
             {
-                errMsg = "No row affected";
-                return errMsg;
-            }
-            return "Delete Successfull";
-        }
+                @DevID = handover.devID,
+                @RepoID = handover.repoID,
+            }).FirstOrDefault();
+            var prevdevid = IsExist.DevID;
+            var prevdate = IsExist.AssignDate;
 
-        public List<Handover> GetHandoverList()
-        {
-            var response = _context.Handovers.Include(m => m.Developer).Include(m => m.RepositoryList).ToList();
-            return response;
-        }
 
-        public Handover UpdateHandOver(Handover handover, out string errMsg)
-        {
-            throw new NotImplementedException();
+            errMsg = string.Empty;
+            string sql = "update RepoDevs set DevID=@NewDev,NewDev=@OldDev,NewDate=@OldDate,AssignDate=@NewDate,IsFirstAssign=@IsFirstAssign where ID=@ID";
+            _db.Query<RepoDevMap>(sql, new
+            {
+                @NewDev = handover.New_Dev,
+                @OldDev = prevdevid,
+                @OldDate = prevdate,
+                @NewDate = handover.NewDate,
+                @IsFirstAssign = handover.IsFirstAssign,
+                @ID = handover.ID,
+            });
+            return handover;
         }
     }
 }

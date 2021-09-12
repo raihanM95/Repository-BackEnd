@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MSDSL_DbAccessor.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210908120114_AddHanOverToDatabae")]
-    partial class AddHanOverToDatabae
+    [Migration("20210912082917_AddFieldToRepoDev")]
+    partial class AddFieldToRepoDev
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -65,9 +65,6 @@ namespace MSDSL_DbAccessor.Migrations
                     b.Property<string>("Date")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DevID")
-                        .HasColumnType("int");
-
                     b.Property<string>("New_Dev")
                         .HasColumnType("nvarchar(max)");
 
@@ -77,14 +74,7 @@ namespace MSDSL_DbAccessor.Migrations
                     b.Property<string>("ProjectID")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RepoID")
-                        .HasColumnType("int");
-
                     b.HasKey("ID");
-
-                    b.HasIndex("DevID");
-
-                    b.HasIndex("RepoID");
 
                     b.ToTable("Handovers");
                 });
@@ -133,6 +123,15 @@ namespace MSDSL_DbAccessor.Migrations
 
                     b.Property<bool>("IsFirstAssign")
                         .HasColumnType("bit");
+
+                    b.Property<string>("NewDate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NewDev")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PrevDev")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RepoID")
                         .HasColumnType("int");
@@ -199,25 +198,6 @@ namespace MSDSL_DbAccessor.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("MSDSL_RepoModel.Entities.Handover", b =>
-                {
-                    b.HasOne("MSDSL_RepoModel.Entities.Developer", "Developer")
-                        .WithMany()
-                        .HasForeignKey("DevID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MSDSL_RepoModel.Entities.RepositoryList", "RepositoryList")
-                        .WithMany()
-                        .HasForeignKey("RepoID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Developer");
-
-                    b.Navigation("RepositoryList");
                 });
 
             modelBuilder.Entity("MSDSL_RepoModel.Entities.RepoClient", b =>

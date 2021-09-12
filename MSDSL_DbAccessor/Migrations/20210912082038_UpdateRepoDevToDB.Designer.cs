@@ -3,14 +3,16 @@ using MSDSL_DbAccessor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MSDSL_DbAccessor.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210912082038_UpdateRepoDevToDB")]
+    partial class UpdateRepoDevToDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,9 +128,6 @@ namespace MSDSL_DbAccessor.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NewDev")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PrevDev")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RepoID")

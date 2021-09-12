@@ -1,5 +1,6 @@
 ﻿using MSDSL_BLL.BLLContract;
 using MSDSL_DbAccessor.IRepository;
+using MSDSL_RepoModel.Dtos;
 using MSDSL_RepoModel.Entities;
 using System;
 using System.Collections.Generic;
@@ -16,24 +17,15 @@ namespace MSDSL_BLL.BLLRepository
         {
             _handoverRepository = handoverRepository;
         }
-        public Handover CreateHandOver(Handover handover, out string errMsg)
-        {
-            throw new NotImplementedException();
-        }
 
-        public string DeleteHandOver(int ID, out string errMsg)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Handover> GetHandoverList()
+        public List<Object> GetHandoverList()
         {
             return _handoverRepository.GetHandoverList();
         }
 
-        public Handover UpdateHandOver(Handover handover, out string errMsg)
+        public HandoverMap UpdateHandOver(HandoverMap handover, out string errMsg)
         {
-            throw new NotImplementedException();
+            return _handoverRepository.UpdateHandOver(handover, out errMsg);
         }
     }
 }

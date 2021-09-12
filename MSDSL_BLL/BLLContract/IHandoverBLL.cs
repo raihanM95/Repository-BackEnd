@@ -1,4 +1,5 @@
-﻿using MSDSL_RepoModel.Entities;
+﻿using MSDSL_RepoModel.Dtos;
+using MSDSL_RepoModel.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,7 @@ namespace MSDSL_BLL.BLLContract
 {
     public interface IHandoverBLL
     {
-        List<Handover> GetHandoverList();
-        string DeleteHandOver(int ID, out string errMsg);
-        Handover CreateHandOver(Handover handover, out string errMsg);
-        Handover UpdateHandOver(Handover handover, out string errMsg);
+        List<Object> GetHandoverList();
+        HandoverMap UpdateHandOver(HandoverMap handover, out string errMsg);
     }
 }

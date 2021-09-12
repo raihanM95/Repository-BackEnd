@@ -17,11 +17,5 @@ namespace MSDSL_RepoModel.Entities
         public string New_Dev { get; set; }
         public string Date { get; set; }
         public string AssignDate { get; set; }
-        public int RepoID { get; set; }
-        [ForeignKey(nameof(RepoID))]
-        public virtual RepositoryList RepositoryList { get; set; }
-        public int DevID { get; set; }
-        [ForeignKey(nameof(DevID))]
-        public virtual Developer Developer { get; set; }
     }
 }
