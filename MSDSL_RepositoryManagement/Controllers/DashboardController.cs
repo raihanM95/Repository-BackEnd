@@ -52,7 +52,7 @@ namespace MSDSL_RepositoryManagement.Controllers
 
             var obj = _dapper.Query<Object>(sql);
 
-            var repoobj = _db.RepositoryLists.FirstOrDefault(obj.id);
+            //var repoobj = _db.RepositoryLists.FirstOrDefault(obj.id);
             return Ok(obj);
         }
     }
