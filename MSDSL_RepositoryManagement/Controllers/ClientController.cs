@@ -30,8 +30,8 @@ namespace MSDSL_RepositoryManagement.Controllers
                 return BadRequest(errMsg);
             }
             return Ok(ObjList);
-
         }
+
         [HttpGet]
         public IActionResult GetClientByName(string name)
         {
@@ -58,7 +58,7 @@ namespace MSDSL_RepositoryManagement.Controllers
         public IActionResult RemoveClient(int Id)
         {
             var Obj = _clientBLL.DeleteClient(Id, out string errMsg);
-            if(!string.IsNullOrEmpty(errMsg))
+            if (!string.IsNullOrEmpty(errMsg))
             {
                 return BadRequest(errMsg);
             }

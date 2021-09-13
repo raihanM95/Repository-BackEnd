@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -43,6 +44,20 @@ namespace MSDSL_RepositoryManagement.Extensions
             services.AddTransient<IHandoverBLL, HandoverBLL>();
             services.AddTransient<IHandoverRepository, HandoverRepository>();
 
+        }
+        public static void ConfigureCors(this IServiceCollection services, IConfiguration config)
+        {
+            
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()//WithOrigins(Gateway)
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                    });
+            });
         }
         public static void ConfigureMSSQLContext(this IServiceCollection services, IConfiguration config)//for passing database credentials
         {

@@ -11,8 +11,9 @@ using System.Threading.Tasks;
 
 namespace MSDSL_RepositoryManagement.Controllers
 {
+	[Route("")]
+	[Route("Home")]
 	[ApiController]
-	[Route("[controller]/[action]")]
 	//[Authorize]
 	public class HomeController : ControllerBase
 	{
@@ -22,6 +23,8 @@ namespace MSDSL_RepositoryManagement.Controllers
 			_actionDescriptorCollectionProvider = actionDescriptorCollectionProvider;
 		}
 
+		[Route("")]
+		[Route("Index")]
 		[AllowAnonymous]
 		[HttpGet]
 		public IActionResult Index()

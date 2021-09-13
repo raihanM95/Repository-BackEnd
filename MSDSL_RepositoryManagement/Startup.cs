@@ -39,6 +39,8 @@ namespace MSDSL_RepositoryManagement
         {
 
             services.AddCors();
+            //services.ConfigureCors(Configuration);
+
             services.ConfigureMSSQLContext(Configuration);//Adding context
             services.ConfigureRepositoryWrapper();//Calling Repositories
             services.ConfigureAutoMapper();//calling mapping profile
@@ -61,10 +63,23 @@ namespace MSDSL_RepositoryManagement
 
             app.UseRouting();
 
+            // global cors policy
+            //app.UseCors(x => x
+            //    .AllowAnyMethod()
+            //    .AllowAnyHeader()
+            //    .SetIsOriginAllowed(origin => true) // allow any origin
+            //    .AllowCredentials()); // allow credentials
+
+
+            //app.UseCors("CorsPolicy");
+
+
             app.UseCors(x => x
               .AllowAnyOrigin()
               .AllowAnyMethod()
               .AllowAnyHeader());
+
+
             app.UseStatusCodePages();
             app.UseAuthentication();
             app.UseAuthorization();
